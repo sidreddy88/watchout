@@ -3,7 +3,8 @@
 
 
 var generateElements = function (n) {
-	var object = [];
+var object = [];
+
 
    for (var i = 0; i < n; i++) {  
    	 var element = {};
@@ -21,6 +22,11 @@ var generateElements = function (n) {
 
   var gameBoardWidth = 800;
   var gameBoardHeight = 500;
+  var currentPlayer = new Player(gameBoardHeight/2, gameBoardWidth/2, 13);
+  var collisions = 0;
+
+ setInterval (function () { currentPlayer.score++;}, 50);
+  
 
   var gameBoard = d3.select('body')
               .append('svg')
@@ -29,14 +35,15 @@ var generateElements = function (n) {
               .attr('height', gameBoardHeight);
 
   var drag = d3.behavior.drag()
-             .on('dragstart', function() { circle.style('fill', 'red'); })
-             .on('drag', function() { circle.attr('cx', d3.event.x)
+             .on('dragstart', function() { player.style('fill', 'red'); })
+             .on('drag', function() { player.attr('cx', d3.event.x)
                                             .attr('cy', d3.event.y); })
-             .on('dragend', function() { circle.style('fill', 'black'); });
+             .on('dragend', function() { player.style('fill', 'black'); });
       debugger;
 
+
   var player = gameBoard.selectAll('.draggableCircle')
-                .data([{ x: (gameBoardWidth / 2), y: (gameBoardHeight / 2), r: 13 }])
+                .data([currentPlayer])
                 .enter()
                 .append('svg:circle')
                 .attr('class', 'draggableCircle')
@@ -62,9 +69,9 @@ var generateElements = function (n) {
 
   var checkCollision = function(enemies, callback) {
   for (var i = 0; i < enemies[0].length; i++) {
-    var radiusSum = parseFloat(enemies[0][i]["attributes"]["r"]["nodeValue"]) + parseFloat(player[0][0]["attributes"]["r"]["nodeValue"]);
-    var xDiff = parseFloat(enemies[0][i]["attributes"]["cx"]["nodeValue"]) - parseFloat(player[0][0]["attributes"]["cx"]["nodeValue"]);
-    var yDiff = parseFloat(enemies[0][i]["attributes"]["cy"]["nodeValue"]) - parseFloat(player[0][0]["attributes"]["cy"]["nodeValue"]);
+    var radiusSum = parseFloat(enemies[0][i]["attributes"]["r"]["nodeValue"]) + parseFloat(currentPlayer.r);
+    var xDiff = parseFloat(enemies[0][i]["attributes"]["cx"]["nodeValue"]) - parseFloat(currentPlayer.x);
+    var yDiff = parseFloat(enemies[0][i]["attributes"]["cy"]["nodeValue"]) - parseFloat(currentPlayer.y);
     var separation = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
     if (separation < radiusSum) {
       return callback();
@@ -80,7 +87,9 @@ var generateElements = function (n) {
      .attr("cy", function(d) { return Math.floor(Math.random() * (200 + 1)) + 0 + d.y; }) ;
 
   checkCollision(enemies , function (){
-    console.log(1);
+    collisions++;
+    currentPlayer.score = 0;
+    console.log (collisions);
    });    
    }; 
    
