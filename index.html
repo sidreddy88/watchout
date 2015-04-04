@@ -4,13 +4,23 @@
     <link rel='stylesheet' type='css' href='styles.css'> 
   </head>
   <body>
+     
     <div class="scoreboard">
       <!-- Modify the scoreboard when important events occur in your game! -->
       <div class="high">High score: <span>0</span></div>
       <div class="current">Current score: <span>0</span></div>
       <div class="collisions">Collisions: <span>0</span></div>
     </div>
+    <svg width="50" height="50">
+       <circle class = "draggable "cx="25" cy="25" r="25" fill="purple"/>
+
+    </svg>
     <script src="d3.js" charset="utf-8"></script>
     <script src='watchout.js'></script>
   </body>
 </html>
+
+
+<!-- <circle class = "draggable "cx="25" cy="25" r="25" fill="purple"
+         transform="matrix(1 0 0 1 0 0)" onmousedown="selectElement(evt)"/>
+ -->
