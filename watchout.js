@@ -19,14 +19,14 @@ var generateElements = function (n) {
   var elements = generateElements (50);
 
 
-  var boxWidth = 800;
-  var boxHeight = 500;
+  var gameBoardWidth = 800;
+  var gameBoardHeight = 500;
 
-  var box = d3.select('body')
+  var gameBoard = d3.select('body')
               .append('svg')
-              .attr('class', 'box')
-              .attr('width', boxWidth)
-              .attr('height', boxHeight);
+              .attr('class', 'gameBoard')
+              .attr('width', gameBoardWidth)
+              .attr('height', gameBoardHeight);
 
   var drag = d3.behavior.drag()
              .on('dragstart', function() { circle.style('fill', 'red'); })
@@ -35,8 +35,8 @@ var generateElements = function (n) {
              .on('dragend', function() { circle.style('fill', 'black'); });
       debugger;
 
-  var player = box.selectAll('.draggableCircle')
-                .data([{ x: (boxWidth / 2), y: (boxHeight / 2), r: 13 }])
+  var player = gameBoard.selectAll('.draggableCircle')
+                .data([{ x: (gameBoardWidth / 2), y: (gameBoardHeight / 2), r: 13 }])
                 .enter()
                 .append('svg:circle')
                 .attr('class', 'draggableCircle')
@@ -46,7 +46,7 @@ var generateElements = function (n) {
                 .call(drag)
                 .style('fill', 'black');
 
-  var enemies = box.selectAll('.enemies')
+  var enemies = gameBoard.selectAll('.enemies')
                 .data(elements)
                 .enter()
                 .append('svg:circle')
