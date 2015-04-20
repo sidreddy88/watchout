@@ -1,7 +1,6 @@
 // start slingin' some d3 here.
 
-
-
+$(document).ready(function(){
 var generateElements = function (n) {
 var object = [];
 
@@ -24,9 +23,13 @@ var object = [];
   var gameBoardHeight = 500;
   var currentPlayer = new Player(gameBoardHeight/2, gameBoardWidth/2, 13);
   var collisions = 0;
-
- setInterval (function () { currentPlayer.score++;}, 50);
   
+  
+ setInterval (function () { 
+  debugger;
+  currentPlayer.score++;
+  document.getElementById("currentScore").innerHTML= currentPlayer.score;
+}, 50);
 
   var gameBoard = d3.select('body')
               .append('svg')
@@ -88,6 +91,7 @@ var object = [];
 
   checkCollision(enemies , function (){
     collisions++;
+    document.getElementById("scoreDisplay").innerHTML= collisions;
     currentPlayer.score = 0;
     console.log (collisions);
    });    
@@ -96,7 +100,7 @@ var object = [];
   
 setInterval(move, 1000);
 
-
+});
 
 
 
